@@ -2,15 +2,14 @@
 title: "Investigating Engagement Patterns and Retention Drop-off Points in Cybersecurity MOOCs"
 author: "Kalyan Kankanala (Student ID: 250551284, Module: MAS8505)"
 date: "2026-01-15"
-
 output:
+  word_document:
+    toc: true
+    toc_depth: '2'
   html_document:
     toc: true
     toc_depth: 2
     number_sections: true
-  word_document:
-    toc: true
-    toc_depth: '2'
   pdf_document:
     toc: true
     toc_depth: '2'
