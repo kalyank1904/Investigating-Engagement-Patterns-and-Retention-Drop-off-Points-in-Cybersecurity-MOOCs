@@ -1,0 +1,298 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Learning Analytics of a Cyber Security MOOC},
+  pdfauthor={Kalyan Kankanala},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Learning Analytics of a Cyber Security MOOC}
+\author{Kalyan Kankanala}
+\date{2026-01-15}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+Student ID: 250551284 Module: MAS8505
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Introduction
+\end{enumerate}
+
+Online learning platforms generate large volumes of learner interaction
+data, which can be analysed to understand learner behaviour, engagement,
+and course outcomes.
+
+This project focuses on learning analytics for a Cyber Security Massive
+Open Online Course (MOOC). The primary objective is to analyse learner
+enrolment patterns, engagement with course steps, survey responses, and
+completion behaviour across multiple course runs.
+
+The key business problem addressed in this analysis is: How learner
+engagement influences course completion, and whether engagement metrics
+can be used to predict successful course completion.
+
+This analysis aims to provide actionable insights that can help course
+designers improve learner retention and engagement.
+
+knitr::include\_graphics(``graphs/completion\_rate\_by\_engagement\_level.png'')
+
+Data Description
+
+The analysis uses datasets from four course runs: Run 1, Run 3, Run 5,
+and Run 7.
+
+The following datasets were used:
+
+Enrolment data: learner registration and completion status
+
+Step activity data: learner interactions with course steps
+
+Leaving survey responses: reasons for learners leaving the course
+
+Each dataset contains anonymised learner identifiers and was analysed at
+both run-level and learner-level granularity.
+
+Data Cleaning and Preparation
+
+Data cleaning was performed separately for each dataset and run to
+ensure consistency.
+
+Key cleaning steps included:
+
+Converting date-time fields to standard formats
+
+Creating binary indicators for step visits and step completion
+
+Handling missing values explicitly
+
+Standardising learner identifiers across datasets
+
+Cleaned datasets were then combined across runs where appropriate to
+enable comparative and integrated analysis.
+
+Exploratory Data Analysis
+
+Exploratory analysis was conducted to understand enrolment patterns and
+learner demographics.
+
+Key EDA outputs include:
+
+Completion rates by course run
+
+Distribution of learners by country
+
+Missingness analysis for demographic variables
+
+The results indicate substantial variation in completion rates across
+runs, with overall completion remaining low --- a common trend in MOOCs.
+
+knitr::include\_graphics(``../graphs/enrolments\_completion\_rate\_by\_run.png'')
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Learner Engagement and Completion
+\end{enumerate}
+
+Learner engagement was measured using:
+
+Number of steps visited
+
+Number of steps completed
+
+These engagement metrics were merged with enrolment completion status to
+assess how engagement differs between learners who completed the course
+and those who did not.
+
+Results show that learners who completed the course had significantly
+higher levels of engagement compared to non-completers.
+
+knitr::include\_graphics(``../graphs/enrolments\_top10\_countries.png'')
+
+knitr::include\_graphics(``../graphs/steps\_completed\_by\_completion.png'')
+
+knitr::include\_graphics(``../graphs/steps\_visited\_by\_completion.png'')
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Statistical Analysis
+\end{enumerate}
+
+To formally test differences in engagement between completers and
+non-completers, non-parametric Wilcoxon rank-sum tests were applied.
+
+The results show statistically significant differences in both:
+
+Steps visited
+
+Steps completed
+
+knitr::kable(
+read.csv(``../reports/output/engagement\_summary\_by\_completion.csv''),
+caption = ``Engagement statistics by course completion status'' )
+
+This confirms that engagement levels are strongly associated with course
+completion.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Predictive Modelling
+\end{enumerate}
+
+Logistic regression models were developed to predict course completion
+based on:
+
+Steps completed
+
+Steps visited
+
+Course run
+
+The model demonstrates that the number of steps completed is a strong
+positive predictor of course completion, even after accounting for
+run-level effects. knitr::kable(
+read.csv(``../reports/output/logit\_odds\_ratios.csv''), caption =
+``Logistic regression odds ratios for course completion'' )
+
+knitr::include\_graphics(``../graphs/logit\_predicted\_prob\_by\_steps\_completed.png'')
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Key Insights and Business Implications
+\end{enumerate}
+
+Key findings from the analysis include:
+
+Learners with low or no engagement have extremely low completion rates
+
+High engagement learners show substantially higher completion
+probabilities
+
+Early engagement appears critical for course success
+
+From a business perspective, these insights suggest that:
+
+Early intervention strategies should target low-engagement learners
+
+Course designers should prioritise interactive steps early in the course
+
+Engagement metrics can be used for early warning systems to improve
+retention
+
+knitr::include\_graphics(``../graphs/roc\_like\_curve.png'')
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Limitations
+\end{enumerate}
+
+This analysis has several limitations:
+
+Engagement was measured only through step interactions
+
+Time-spent data and video analytics were not available
+
+Survey responses were limited to certain course runs
+
+Future analyses could incorporate richer behavioural data and
+longitudinal tracking.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  Conclusion
+\end{enumerate}
+
+This project demonstrates the value of learning analytics in
+understanding learner behaviour in online courses.
+
+The findings show a strong relationship between learner engagement and
+course completion, and highlight opportunities for data-driven
+interventions to improve learner outcomes.
+
+Overall, this analysis provides meaningful insights that can inform
+course design and learner support strategies in MOOCs.
+
+\end{document}

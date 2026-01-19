@@ -1,0 +1,238 @@
+---
+title: "Investigating Engagement Patterns and Retention Drop-off Points in Cybersecurity MOOCs"
+author: "Kalyan Kankanala (Student ID: 250551284, Module: MAS8505)"
+date: "2026-01-15"
+
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+  word_document:
+    toc: true
+    toc_depth: '2'
+  pdf_document:
+    toc: true
+    toc_depth: '2'
+---
+
+
+
+
+## **Introduction**
+
+**1.1 Context**
+
+  Online learning platforms generate large volumes of learner interaction data,
+  which can be analysed to understand learner behaviour, engagement, and course outcomes.
+  
+  This project focuses on learning analytics for a Cyber Security Massive Open Online Course (MOOC).
+  The primary objective is to analyse learner enrolment patterns, engagement with course steps,
+  survey responses, and completion behaviour across multiple course runs.
+
+**1.2 Business Objectives**
+
+  The key business problem addressed in this analysis is:
+  How learner engagement influences course completion, and whether engagement metrics
+  can be used to predict successful course completion.
+  
+  This analysis aims to provide actionable insights that can help course designers
+  improve learner retention and engagement.
+
+```{r fig-myplot-1, echo=FALSE, out.width="80%"}
+
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/completion_rate_by_engagement_level.png")
+```
+  The "Completion Rate by Engagement Level" graph shows that there is a great positive correlation in the sense   that as the engagement level increases, the completion outcome also improves. The most engaged group of people   has the highest completion rate, which is slightly above 0.4, establishing that active engagement is very       important in determining success. The group that is moderately engaged has the average completion rate, as      expected, in that even low engagement seems to make up an important measure in determining completion success.   The least engaged group has completion rates of about zero, establishing the critical role that engagement      plays in determining success. It appears that active engagement can help in improving completion success and    that engagement might serve as a good determinant of success.
+  
+## **CRISP-DM Cycle 1: Baseline Engagement & Retention Analysis**
+
+  **2.1 Business Understanding**
+  
+  The first cycle targets achieving a baseline knowledge about learner enrollment, engagement, and completion     trends as a result of several iterations of the learning program.
+  The critical stakeholder is the course vendor, and their stake includes improving retention and completion      rates based on understanding learner behavior and dropout trends and insights. The success criteria for this    stakeholder include delivering key findings such as completion predictors and barriers that will drive future   courses and support decisions.
+
+  **2.2 Data Understanding**
+  
+  The analysis uses datasets from four course runs: Run 1, Run 3, Run 5, and Run 7.
+  
+  The following datasets were used:
+  
+  * Enrolment data: learner registration and completion status
+  
+  * Step activity data: learner interactions with course steps
+  
+  * Leaving survey responses: reasons for learners leaving the course
+
+  Each dataset contains anonymised learner identifiers and was analysed at both
+  run-level and learner-level granularity.
+
+  **2.3 Data Cleaning and Preparation**
+  
+  Data cleaning was performed separately for each dataset and run to ensure consistency.
+  
+  Key cleaning steps included:
+  
+   * Converting date-time fields to standard formats
+    
+   * Creating binary indicators for step visits and step completion
+    
+   * Handling missing values explicitly
+    
+   * Standardising learner identifiers across datasets
+  
+  Cleaned datasets were then combined across runs where appropriate to enable
+  comparative and integrated analysis.
+
+  **2.4 Descriptive & Exploratory Data Analysis**
+  
+  Exploratory analysis was conducted to understand enrolment patterns and learner demographics.
+  
+  Key EDA outputs include:
+  
+  * Completion rates by course run
+    
+  * Distribution of learners by country
+    
+  * Missingness analysis for demographic variables
+  
+  The results indicate substantial variation in completion rates across runs,
+  with overall completion remaining low — a common trend in MOOCs.
+
+```{r fig-myplot-2, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/enrolments_completion_rate_by_run.png")
+``` 
+
+  The Completion Rate by Run chart reflects a stark drop starting from Run 1, with more than a 12% completion     rate. Runs 3, 5, and 7 all were below 2%, thus reflecting a very serious decline in either the engagement of    the learners or effectiveness of subsequent versions of the course. This pattern underlines the need to check   what was different after the first run to understand the drivers of reduced retention.
+  
+```{r fig-myplot-3, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/enrolments_top10_countries.png")
+```
+
+  The geographical dispersal of learners, with a substantial majority belonging to the "Unknown" group,           indicative of the underdevelopment of geographical information acquisition. The second-highest number is        registered for Great Britain, followed by India, the US, and then Nigeria, although all these countries have    substantially lower numbers than the "Unknown" group. The remaining countries, Australia, Italy, Canada,        Mexico, and Ireland, have equal although not large numbers of learners.
+
+  **2.5 Evalution**
+  
+  The retention funnel indicates significant learner dropout for each run, most occurring near the beginning of   the course. Learners who finish the course engage more, in terms of steps viewed and attempted, than those who   do not finish. The surveys indicate time constraints/commitments as the most significant reason for dropout.    The data indicates importance to learner engagement early on, and it forms a solid foundation for predicting    completion for the second round of the CRISP-DM process.
+  
+```{r fig-myplot-4, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/retention_funnel_by_run.png")
+```  
+
+  The Retention Funnel by Run, represented by the graph, shows how learner engagement drops at each stage of the   funnel. Run 1 always registers the highest retention at each stage, from viewing steps to course completion.    On the other hand, Retention Funnel graphs for Runs 3, 5, and 7 show systematically declining retention, with   sharp drops, particularly past the 50% mark. Such a trend indicates that while the initial level might be       more or less the same, the retention level at which learners stay in the course is systematically higher        for Run 1.
+  
+```{r fig-myplot-5, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/leaving_top_reasons.png")
+```  
+  The Top Leaving Reasons (Runs 5 and 7) graph reveals that, for Run 7, the response ‘I don’t have enough time’   came up more often than the previous leading reason ‘Other’ for Run 5. Other highly reported categories are     ‘Course required more time than I realised’ and ‘Course wasn’t what I expected’ for Run 5 and Run 7.
+  
+## **Learner Engagement and Completion**
+
+Learner engagement was measured using:
+
+ * Number of steps visited
+  
+ * Number of steps completed
+  
+These engagement metrics were merged with enrolment completion status to assess
+how engagement differs between learners who completed the course and those who did not.
+
+Results show that learners who completed the course had significantly higher
+levels of engagement compared to non-completers.
+
+
+```{r fig-myplot-6, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/steps_completed_boxplot_by_completion.png")
+``` 
+
+  There appears to be a concentrated distribution of learners who have high values of the step completion         counts, while non-completers have lower median values and ranges which show variability in learning, meaning    learners were not engaged in equal measures. This indicates there is a relationship between completion of       steps and the completion of courses.
+  
+```{r fig-myplot-7, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/steps_visited_boxplot_by_completion.png")
+```
+
+  A similar trend can also be seen for steps visited by users. The completer group always visited more steps      with less variation, and for the noncompleters, there is scattered and overall low usage. This supports that    quality interaction with the content is a key factor for completions.
+  
+## **Statistical Analysis of Engagement Differences**
+
+To formally test differences in engagement between completers and non-completers,
+non-parametric Wilcoxon rank-sum tests were applied.
+  
+The results show statistically significant differences in both:
+  
+  * Steps visited
+  
+  * Steps completed
+
+
+```{r}
+knitr::kable(
+  read.csv("output/engagement_stats_by_completion.csv"),
+  caption = "Engagement statistics by course completion status"
+)
+
+```
+
+  Analysis of engagement metrics reveals a tremendous difference between the number of steps undertaken by both   the completers and non-completers in the course. The completers had accessed and completed more than 52 steps   on average, which had a median of 60 compared to less than 8 steps for the non-completers, which had a median   of nearly zero.
+  
+  This confirms that engagement levels are strongly associated with course completion.
+
+## **CRISP-DM Cycle 2: Predicting Completion from Engagement**
+
+Logistic regression models were developed to predict course completion based on:
+
+  * Steps completed
+  
+  * Steps visited
+
+The model demonstrates that the number of steps completed is a strong positive predictor
+of course completion, even after accounting for run-level effects.
+
+```{r}
+knitr::kable(
+read.csv("output/logit_odds_ratios.csv"),
+caption = "Logistic regression odds ratios for course completion"
+)
+``` 
+
+  Both steps taken and steps passed are highly significant predictor variables, with positive coefficients, for   completion, and their odds ratios are quite large. For completion, the negative coefficients for runs 3, 5,     and 7 imply lower probabilities of completion than run 1.
+  
+```{r fig-myplot-8, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/logit_predicted_prob_by_steps_completed.png")
+```
+
+  The predicted probability curve for Run 1 shows a steep increase in completion likelihood between               approximately 5 and 20 completed steps, after which the probability plateaus near 1.0. This pattern highlights   the importance of early progress, as initial engagement strongly influences eventual completion.
+  
+```{r fig-myplot-9, echo=FALSE, out.width="80%"}
+knitr::include_graphics("/Users/kalyankankanala/Desktop/R/R_Kalyan_Project/LearningAnalyticsProject/graphs/roc_like_curve.png")
+```
+
+  The ROC‑like curve demonstrates strong model performance, with a steep rise toward the top‑left corner. This    indicates that the logistic regression model effectively distinguishes between completers and non‑completers,   supporting its use for predictive analysis.
+  
+## **Key Insights and Business Implications**
+
+Key findings from the analysis include:
+
+  * Learners with low or no engagement have extremely low completion rates
+  
+  * High engagement learners show substantially higher completion probabilities
+  
+  * Early engagement appears critical for course success
+  
+  * From a business perspective, these insights suggest that:
+  
+  * Early intervention strategies should target low-engagement learners
+  
+  * Course designers should prioritise interactive steps early in the course
+  
+  * Engagement metrics can be used for early warning systems to improve retention
+
+
+  
+## **Conclusion**
+
+  Overall, the results outlined above demonstrate clearly that engagement is the biggest factor in course        completion. Run 1 has always been more successful in course completion rates, levels of completion, and         completion percentages than subsequent runs, and Runs 3, 5, and 7 have been significantly poorer in levels of   course engagement. The major reasons identified in the analysis were pressures of time and differing            expectations in relation to leaving the course. The analysis of course engagement levels and the logistic       results both indicate clearly that visiting more steps is a significant factor in determining course            completion.
+
+
+
+

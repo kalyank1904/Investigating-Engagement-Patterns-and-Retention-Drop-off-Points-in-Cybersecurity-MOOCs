@@ -1,0 +1,51 @@
+=== Model A: completed ~ steps_completed + run ===
+
+Call:
+glm(formula = completed ~ steps_completed + run, family = binomial(), 
+    data = df)
+
+Coefficients:
+                 Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     -4.604395   0.079524  -57.90   <2e-16 ***
+steps_completed  0.116135   0.002045   56.78   <2e-16 ***
+run3            -4.453153   0.160946  -27.67   <2e-16 ***
+run5            -5.665123   0.230270  -24.60   <2e-16 ***
+run7            -4.123196   0.181662  -22.70   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 13340.0  on 23640  degrees of freedom
+Residual deviance:  4216.1  on 23636  degrees of freedom
+AIC: 4226.1
+
+Number of Fisher Scoring iterations: 8
+
+
+
+=== Model B: completed ~ steps_completed + steps_visited + run ===
+
+Call:
+glm(formula = completed ~ steps_completed + steps_visited + run, 
+    family = binomial(), data = df)
+
+Coefficients:
+                Estimate Std. Error z value Pr(>|z|)    
+(Intercept)     -4.30866    0.07822  -55.09   <2e-16 ***
+steps_completed  0.66067    0.04301   15.36   <2e-16 ***
+steps_visited   -0.53936    0.04232  -12.75   <2e-16 ***
+run3            -4.93207    0.17341  -28.44   <2e-16 ***
+run5            -6.11466    0.23889  -25.60   <2e-16 ***
+run7            -4.50601    0.19369  -23.26   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 13340.0  on 23640  degrees of freedom
+Residual deviance:  3983.3  on 23635  degrees of freedom
+AIC: 3995.3
+
+Number of Fisher Scoring iterations: 9
+
